@@ -1,17 +1,10 @@
 "use client";
 
 import useTrending from "@/hooks/useTrending";
+import { isMovie, isShow } from "@/models";
 import { TMDB_IMG_BASE } from "@/services/tmdb";
 import { TimeWindow } from "@/types";
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Dropdown,
-  Rating,
-  RatingStar,
-} from "flowbite-react";
-import Image from "next/image";
+import { Button, ButtonGroup, Rating, RatingStar } from "flowbite-react";
 
 type TrendingProps = {
   carousel?: boolean;
@@ -54,12 +47,19 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
 
       <div className="flex flex-wrap">
         {trending.map((trending) => {
+          let title: string = "";
+          if (isMovie(trending)) {
+            title = trending.title;
+          } else if (isShow(trending)) {
+            title = trending.name;
+          }
+
           return (
             <div className="basis-1/2 p-2 space-y-2">
               <img
                 className="w-full rounded-lg"
                 src={`${TMDB_IMG_BASE}/w500${trending.poster_path}`}
-                alt={trending.title}
+                alt={title}
               />
 
               <div className="flex items-center space-x-1">
@@ -71,7 +71,7 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
                 </span>
               </div>
 
-              <p className="font-semibold">{trending.title}</p>
+              <p className="font-semibold">{title}</p>
             </div>
           );
         })}

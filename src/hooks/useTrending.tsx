@@ -1,18 +1,18 @@
 import { PagedResponse } from "@/models";
 import TMDB from "@/services/tmdb";
-import { MediaType, TimeWindow } from "@/types";
+import { MediaType, MovieOrShow, TimeWindow } from "@/types";
 import { useEffect, useState } from "react";
 
 const useTrending = (timeWindow: TimeWindow, mediaType: MediaType = "all") => {
   const [tw, setTimeWindow] = useState(timeWindow);
   const [mt, setMediaType] = useState(mediaType);
-  const [trending, setTrending] = useState<any[]>([]);
+  const [trending, setTrending] = useState<MovieOrShow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
 
-    TMDB.get<PagedResponse<any>>(`trending/${mt}/${tw}`)
+    TMDB.get<PagedResponse<MovieOrShow>>(`trending/${mt}/${tw}`)
       .then(({ data: { results } }) => {
         setTrending(results);
         console.log(results);
