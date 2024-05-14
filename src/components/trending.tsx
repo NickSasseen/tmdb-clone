@@ -55,7 +55,7 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
           }
 
           return (
-            <div className="basis-1/2 p-2 space-y-2">
+            <div key={trending.id} className="basis-1/2 p-2 space-y-2">
               <img
                 className="w-full rounded-lg"
                 src={`${TMDB_IMG_BASE}/w500${trending.poster_path}`}
