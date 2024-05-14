@@ -1,5 +1,6 @@
-import { Movie } from "@/models/movie";
-import { TvShow } from "@/models/tv-show";
+import Movie from "@/models/movie";
+import TvShow from "@/models/tv-show";
+
 
 export type TimeWindow = "day" | "week";
 export type MediaType = "movie" | "tv" | "person" | "all";

@@ -3,7 +3,7 @@
 import useTrending from "@/hooks/useTrending";
 import { isMovie, isShow } from "@/models";
 import { TMDB_IMG_BASE } from "@/services/tmdb";
-import { TimeWindow } from "@/types";
+import { MovieOrShow, TimeWindow } from "@/types";
 import { Button, ButtonGroup, Rating, RatingStar } from "flowbite-react";
 
 type TrendingProps = {
@@ -26,6 +26,30 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
     { buttonText: "This week", value: "week" },
   ];
 
+  const getCarouselItem = (item: MovieOrShow) => {
+    const title: string = isMovie(item) ? item.title : item.name;
+    return (
+      <div key={item.id} className="carousel-item w-1/2">
+        <div className="flex-col space-y-1">
+          <img
+            className="rounded-md"
+            src={`${TMDB_IMG_BASE}/w500${item.poster_path}`}
+            alt={title}
+          />
+
+          <div className="flex items-center space-x-1">
+            <Rating>
+              <RatingStar />
+            </Rating>
+            <span className="text-xs">{item.vote_average.toFixed(1)}</span>
+          </div>
+
+          <p className="font-semibold">{title}</p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="flex justify-between items-center md:items-start md:justify-normal space-x-4 my-4">
@@ -33,48 +57,20 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
           Trending
         </h2>
         <ButtonGroup>
-          {timeWindowOptions.map((two, index) => (
+          {timeWindowOptions.map((option, index) => (
             <Button
               key={index}
-              color={`${timeWindow === two.value ? "red" : "gray"}`}
-              onClick={() => setTimeWindow(two.value)}
+              color={`${timeWindow === option.value ? "red" : "gray"}`}
+              onClick={() => setTimeWindow(option.value)}
             >
-              {two.buttonText}
+              {option.buttonText}
             </Button>
           ))}
         </ButtonGroup>
       </div>
 
-      <div className="flex flex-wrap">
-        {trending.map((trending) => {
-          let title: string = "";
-          if (isMovie(trending)) {
-            title = trending.title;
-          } else if (isShow(trending)) {
-            title = trending.name;
-          }
-
-          return (
-            <div key={trending.id} className="basis-1/2 p-2 space-y-2">
-              <img
-                className="w-full rounded-lg"
-                src={`${TMDB_IMG_BASE}/w500${trending.poster_path}`}
-                alt={title}
-              />
-
-              <div className="flex items-center space-x-1">
-                <Rating>
-                  <RatingStar />
-                </Rating>
-                <span className="text-xs">
-                  {trending.vote_average.toFixed(1)}
-                </span>
-              </div>
-
-              <p className="font-semibold">{title}</p>
-            </div>
-          );
-        })}
+      <div className="carousel carousel-center max-w-sm p-4 space-x-4 rounded-box">
+        {trending.map((item) => getCarouselItem(item))}
       </div>
     </>
   );
