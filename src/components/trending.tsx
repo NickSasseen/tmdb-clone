@@ -4,7 +4,7 @@ import useTrending from "@/hooks/useTrending";
 import { isMovie, isShow } from "@/models";
 import { TMDB_IMG_BASE } from "@/services/tmdb";
 import { MovieOrShow, TimeWindow } from "@/types";
-import { Button, ButtonGroup, Rating, RatingStar } from "flowbite-react";
+import Link from "next/link";
 
 type TrendingProps = {
   carousel?: boolean;
@@ -26,10 +26,16 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
     { buttonText: "This week", value: "week" },
   ];
 
-  const getCarouselItem = (item: MovieOrShow) => {
+  const getCarouselItem = (item: MovieOrShow, index: number) => {
     const title: string = isMovie(item) ? item.title : item.name;
+    const type: string = isMovie(item) ? "movie" : "tv";
     return (
-      <div key={item.id} className="carousel-item w-1/2">
+      <Link
+        key={item.id}
+        id={`item${index}`}
+        className="carousel-item w-1/2 md:w-1/6"
+        href={`/${type}/${item.id}`}
+      >
         <div className="flex-col space-y-1">
           <img
             className="rounded-md"
@@ -38,15 +44,20 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
           />
 
           <div className="flex items-center space-x-1">
-            <Rating>
-              <RatingStar />
-            </Rating>
+            <div className="rating rating-sm">
+              <input
+                readOnly
+                type="radio"
+                name="rating-1"
+                className="mask mask-star bg-primary"
+              />
+            </div>
             <span className="text-xs">{item.vote_average.toFixed(1)}</span>
           </div>
 
           <p className="font-semibold">{title}</p>
         </div>
-      </div>
+      </Link>
     );
   };
 
@@ -56,21 +67,26 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
         <h2 className="text-2xl md:text-4xl tracking-wider md:tracking-widest">
           Trending
         </h2>
-        <ButtonGroup>
+        <div className="join">
           {timeWindowOptions.map((option, index) => (
-            <Button
+            <button
               key={index}
-              color={`${timeWindow === option.value ? "red" : "gray"}`}
-              onClick={() => setTimeWindow(option.value)}
+              aria-label={option.buttonText}
+              className={`join-item btn btn-outline ${
+                timeWindow === option.value ? "btn-active" : ""
+              }`}
+              onClick={() => {
+                setTimeWindow(option.value);
+              }}
             >
               {option.buttonText}
-            </Button>
+            </button>
           ))}
-        </ButtonGroup>
+        </div>
       </div>
 
-      <div className="carousel carousel-center max-w-sm p-4 space-x-4 rounded-box">
-        {trending.map((item) => getCarouselItem(item))}
+      <div className="carousel carousel-center p-4 space-x-4 rounded-box">
+        {trending.map((item, index) => getCarouselItem(item, index))}
       </div>
     </>
   );

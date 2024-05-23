@@ -19,7 +19,12 @@ const TMDB = {
       params: params,
     });
   },
+  getImageUrl: (path: string, size: string = "w500") => {
+    return `${TMDB_IMG_BASE}/${size}${path}`;
+  },
 };
+
+
 
 export default TMDB;
 export { TMDB_IMG_BASE };

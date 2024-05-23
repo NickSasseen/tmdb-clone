@@ -1,6 +1,4 @@
 "use client";
-import { Navbar } from "flowbite-react";
-import Link from "next/link";
 
 interface MenuItem {
   text: string;
@@ -82,7 +80,7 @@ export default function MyNavbar({ children }: { children: any }) {
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex flex-col min-h-screen">
         {/* Navbar */}
         {navbar}
 
@@ -96,61 +94,11 @@ export default function MyNavbar({ children }: { children: any }) {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200">
+        <ul className="menu p-4 w-3/5 min-h-full bg-gray-900">
           {/* Sidebar content here */}
           {myMenuItems()}
         </ul>
       </div>
     </div>
-  );
-
-  return (
-    <Navbar fluid rounded className="bg-gray-900">
-      <Navbar.Brand href="https://flowbite-react.com">
-        <img
-          src="/favicon.ico"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite React Logo"
-        />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          TMDB Clone
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2">
-        <Navbar.Toggle />
-      </div>
-      <Navbar.Collapse>
-        <Navbar.Link href="#" active>
-          Home
-        </Navbar.Link>
-        <Navbar.Link href="#">About</Navbar.Link>
-        <Navbar.Link href="#">Services</Navbar.Link>
-        <Navbar.Link href="#">Pricing</Navbar.Link>
-        <Navbar.Link href="#">Contact</Navbar.Link>
-      </Navbar.Collapse>
-    </Navbar>
-  );
-
-  return (
-    <Navbar fluid rounded className="border-gray-200 bg-gray-900">
-      <Navbar.Brand href="/" className="space-x-3 items-center">
-        <img src="/favicon.ico" className="h-8" />
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-          TMDB Clone
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2">
-        <Navbar.Toggle />
-      </div>
-
-      <Navbar.Collapse>
-        <Navbar.Link href="/">Test</Navbar.Link>
-        {/* {menuItems.map((menuItem, index) => (
-          <Navbar.Link key={index} href={menuItem.href}>
-            {menuItem.text}
-          </Navbar.Link>
-        ))} */}
-      </Navbar.Collapse>
-    </Navbar>
   );
 }

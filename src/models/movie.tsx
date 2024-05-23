@@ -1,3 +1,6 @@
+import CastMember from "./castMember";
+import CrewMember from "./crewMember";
+
 export default interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -8,7 +11,7 @@ export default interface Movie {
     backdrop_path: string;
   };
   budget: number;
-  genres: { id: number; name: string }[];
+  genres: IdAndName[];
   homepage: string;
   id: number;
   imdb_id: string;
@@ -42,7 +45,18 @@ export default interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  // append to response items
+  keywords: { keywords: IdAndName[] };
+  credits: {
+    cast: CastMember[];
+    crew: CrewMember[];
+  };
 }
+
+type IdAndName = {
+  id: number;
+  name: string;
+};
 
 const isMovie = (obj: any): obj is Movie => {
   return "title" in obj;
