@@ -1,5 +1,8 @@
+import Review from "./review";
 import CastMember from "./castMember";
 import CrewMember from "./crewMember";
+import { PagedResponse } from "./paged-response";
+import { IdAndName } from "@/types";
 
 export default interface Movie {
   adult: boolean;
@@ -51,12 +54,8 @@ export default interface Movie {
     cast: CastMember[];
     crew: CrewMember[];
   };
+  reviews: PagedResponse<Review>;
 }
-
-type IdAndName = {
-  id: number;
-  name: string;
-};
 
 const isMovie = (obj: any): obj is Movie => {
   return "title" in obj;

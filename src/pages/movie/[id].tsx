@@ -1,7 +1,9 @@
+import useCollection from "@/hooks/useCollection";
 import useMovie from "@/hooks/useMovie";
 import Movie from "@/models/movie";
 import TMDB, { TMDB_IMG_BASE } from "@/services/tmdb";
 import { useRouter } from "next/router";
+import { ReactNode } from "react";
 import {
   HiArrowRight,
   HiOutlineBookmark,
@@ -154,6 +156,52 @@ const Cast = ({ movie }: MovieDetailComponent) => {
   );
 };
 
+const DetailSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) => {
+  return (
+    <div className="space-y-2">
+      <h3 className="font-bold text-xl">{title}</h3>
+      {children}
+    </div>
+  );
+};
+
+const Collection = ({ movie }: MovieDetailComponent) => {
+  const { collection, loading } = useCollection(movie.belongs_to_collection.id);
+
+  if (loading) return <p>Loading...</p>;
+  if (!collection) return <p>Collection not found...</p>;
+
+  return (
+    <DetailSection title="Collection">
+      <div
+        className="card bg-base-100 shadow-xl img-full h-80"
+        style={{
+          backgroundImage: `url(${TMDB.getImageUrl(
+            movie.belongs_to_collection.backdrop_path,
+            "w1280"
+          )})`,
+        }}
+      >
+        <div className="card-body">
+          <h2 className="card-title">Part of the {collection.name}</h2>
+          <p>
+            Includes {collection.parts.map((movie) => movie.title).join(", ")}
+          </p>
+          <div className="card-actions justify-end">
+            <button className="btn btn-primary">View the collection</button>
+          </div>
+        </div>
+      </div>
+    </DetailSection>
+  );
+};
+
 export default function MyMovie() {
   const router = useRouter();
   const { id } = router.query;
@@ -170,9 +218,10 @@ export default function MyMovie() {
         <div className="basis-3/4 p-4">
           {/* Cast */}
           <Cast movie={movie} />
-          <p>social</p>
+
+          {movie.belongs_to_collection?.id && <Collection movie={movie} />}
+
           <p>media</p>
-          <p>collection</p>
           <p>recommendations</p>
         </div>
         <div className="flex-1 space-y-8">

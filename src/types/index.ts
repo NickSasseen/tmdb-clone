@@ -5,3 +5,8 @@ export type TimeWindow = "day" | "week";
 export type MediaType = "movie" | "tv" | "person" | "all";
 
 export type MovieOrShow = Movie | TvShow;
+
+export type IdAndName = {
+  id: number;
+  name: string;
+};
