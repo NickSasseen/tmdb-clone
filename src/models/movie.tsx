@@ -3,6 +3,7 @@ import CastMember from "./castMember";
 import CrewMember from "./crewMember";
 import { PagedResponse } from "./paged-response";
 import { IdAndName } from "@/types";
+import Video from "./video";
 
 export default interface Movie {
   adult: boolean;
@@ -55,6 +56,15 @@ export default interface Movie {
     crew: CrewMember[];
   };
   reviews: PagedResponse<Review>;
+  images: {
+    backdrops: any[];
+    logos: any[];
+    posters: any[];
+  };
+  recommendations: PagedResponse<Movie>;
+  videos: {
+    results: Video[];
+  };
 }
 
 const isMovie = (obj: any): obj is Movie => {

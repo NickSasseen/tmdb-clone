@@ -1,18 +1,18 @@
-import useCollection from "@/hooks/useCollection";
 import useMovie from "@/hooks/useMovie";
 import Movie from "@/models/movie";
 import TMDB, { TMDB_IMG_BASE } from "@/services/tmdb";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
-import {
-  HiArrowRight,
-  HiOutlineBookmark,
-  HiOutlineHeart,
-  HiOutlineViewList,
-} from "react-icons/hi";
+import { HeroSection } from "./HeroSection";
+import { Cast } from "./Cast";
+import { DetailSection } from "./DetailSection";
+import { Collection } from "./Collection";
+import { Keywords } from "./Keywords";
+import { Media } from "./Media";
+import { Recommendations } from "./Recommendations";
 
-type MovieDetailComponent = {
+export type MovieDetailComponent = {
   movie: Movie;
+  className?: string;
 };
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -20,235 +20,85 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-const HeroSection = ({ movie }: MovieDetailComponent) => {
-  const hrs = Math.floor(movie.runtime / 60);
-  const mins = movie.runtime % 60;
-  const runtime = `${hrs}hrs ${mins}m`;
-
-  const vote = (movie.vote_average * 10).toFixed(0);
-
-  const buttonRow = (
-    <div className="flex space-x-5">
-      <button className="btn btn-lg btn-circle btn-outline text-xl">
-        <HiOutlineViewList />
-      </button>
-      <button className="btn btn-lg btn-circle btn-outline text-xl">
-        <HiOutlineHeart />
-      </button>
-      <button className="btn btn-lg btn-circle btn-outline text-xl">
-        <HiOutlineBookmark />
-      </button>
-    </div>
-  );
-
-  return (
-    <div
-      className="hero"
-      style={{
-        backgroundImage: `url(${TMDB.getImageUrl(
-          movie.backdrop_path,
-          "w1280"
-        )})`,
-      }}
-    >
-      <div className="hero-overlay bg-opacity-80"></div>
-
-      <div className="hero-content text-neutral-content w-full p-8">
-        <div className="basis-1/4">
-          <img
-            className="rounded-md"
-            src={TMDB.getImageUrl(movie.poster_path)}
-          />
-        </div>
-
-        <div className="flex-1 p-4 self-start space-y-4">
-          <h1 className="font-bold text-4xl">
-            {movie.title}{" "}
-            {movie.release_date && (
-              <span className="font-thin">
-                ({new Date(movie.release_date).getFullYear()})
-              </span>
-            )}
-          </h1>
-
-          <h3 className="flex space-x-4 items-center text-lg">
-            <div className="space-x-1">
-              {movie.genres.map((genre) => (
-                // change these to buttons later
-                <div key={genre.id} className="badge badge-outline px-2 py-4">
-                  {genre.name}
-                </div>
-              ))}
-            </div>
-            <span>{runtime}</span>
-          </h3>
-
-          <div
-            className="radial-progress text-primary"
-            style={{ "--value": vote }}
-            role="progressbar"
-          >
-            {vote}%
-          </div>
-
-          {buttonRow}
-
-          <div>
-            <p className="italic font-thin text-lg mb-2">{movie.tagline}</p>
-            <h2 className="font-bold text-xl">Overview </h2>
-            <p>{movie.overview}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Keywords = ({ movie }: MovieDetailComponent) => {
-  return (
-    <div className="space-y-2">
-      <h3 className="font-bold text-xl">Keywords</h3>
-      <div className="flex flex-wrap">
-        {movie.keywords.keywords.map((keyword, index) => (
-          <div
-            key={index}
-            className="badge badge-outline px-4 py-4 text-md mr-2 my-1"
-          >
-            {keyword.name}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const Cast = ({ movie }: MovieDetailComponent) => {
-  const topTenCastMembers = movie.credits.cast
-    .sort((first, second) => second.popularity - first.popularity)
-    .slice(0, 10);
-
-  return (
-    <div className="space-y-2">
-      <h3 className="font-bold text-xl">Top Billed Cast</h3>
-      <div className="carousel carousel-center p-4 space-x-4">
-        {topTenCastMembers.map((castMember) => (
-          <div key={castMember.id} className="carousel-item w-1/2 md:w-1/6">
-            <div className="flex-col space-y-1">
-              <img
-                src={TMDB.getImageUrl(castMember.profile_path)}
-                className="rounded-md"
-              />
-              <p className="font-semibold text-md">{castMember.name}</p>
-              <p className="font-extralight text-sm">{castMember.character}</p>
-            </div>
-          </div>
-        ))}
-        <div className="carousel-item w-1/2 md:w-1/6">
-          <div className="flex flex-1 justify-center items-center">
-            <div className="flex items-center space-x-2">
-              <p>View more</p>
-              <HiArrowRight />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const DetailSection = ({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) => {
-  return (
-    <div className="space-y-2">
-      <h3 className="font-bold text-xl">{title}</h3>
-      {children}
-    </div>
-  );
-};
-
-const Collection = ({ movie }: MovieDetailComponent) => {
-  const { collection, loading } = useCollection(movie.belongs_to_collection.id);
-
-  if (loading) return <p>Loading...</p>;
-  if (!collection) return <p>Collection not found...</p>;
-
-  return (
-    <DetailSection title="Collection">
-      <div
-        className="card bg-base-100 shadow-xl img-full h-80"
-        style={{
-          backgroundImage: `url(${TMDB.getImageUrl(
-            movie.belongs_to_collection.backdrop_path,
-            "w1280"
-          )})`,
-        }}
-      >
-        <div className="card-body">
-          <h2 className="card-title">Part of the {collection.name}</h2>
-          <p>
-            Includes {collection.parts.map((movie) => movie.title).join(", ")}
-          </p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">View the collection</button>
-          </div>
-        </div>
-      </div>
-    </DetailSection>
-  );
-};
-
 export default function MyMovie() {
   const router = useRouter();
   const { id } = router.query;
+  if (!id) return <p>Uh oh....</p>;
   const { movie, loading } = useMovie(parseInt(id as string));
 
   if (loading) return <p>Loading...</p>;
   if (!movie) return <p>no movie found</p>;
 
   return (
-    <>
-      <HeroSection movie={movie} />
+    <div className="max-w-full">
+      <HeroSection className="hidden md:grid" movie={movie} />
 
-      <section className="flex p-4">
-        <div className="basis-3/4 p-4">
+      <div className="md:hidden">
+        {/* Backdrop */}
+        <img
+          className="w-full"
+          src={TMDB.getImageUrl(movie.backdrop_path, "w1280")}
+          alt={movie.title}
+        />
+
+        <div className="flex p-4">
+          <div className="basis-1/3">
+            <img
+              className="rounded-md"
+              src={TMDB.getImageUrl(movie.poster_path)}
+              alt={movie.title}
+            />
+          </div>
+
+          <div className="flex-1 px-2">
+            <div className="card bg-base-100 shadow-xl rounded-md">
+              <div className="card-body">
+                <h2 className="card-title">{movie.title}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section className="p-4 md:flex md:p-8 md:space-x-4">
+        <div className="md:basis-3/4 space-y-4 overflow-x-auto">
           {/* Cast */}
           <Cast movie={movie} />
 
           {movie.belongs_to_collection?.id && <Collection movie={movie} />}
 
-          <p>media</p>
-          <p>recommendations</p>
+          <Media movie={movie} />
+          <Recommendations movie={movie} />
         </div>
-        <div className="flex-1 space-y-8">
-          <div className="flex-col space-y-4">
-            {/* Info */}
-            {[
-              { title: "Status", text: movie.status },
-              { title: "Original Language", text: movie.original_language },
-              {
-                title: "Budget",
-                text: currencyFormatter.format(movie.budget),
-              },
-              {
-                title: "Revenue",
-                text: currencyFormatter.format(movie.revenue),
-              },
-            ].map((item, index) => (
-              <div key={index}>
-                <p className="font-bold underline">{item.title}</p>
-                <p className="mt-1">{item.text}</p>
-              </div>
-            ))}
-          </div>
+
+        <div className="md:flex-1 space-y-4">
+          <DetailSection title="Information">
+            <div className="flex flex-wrap p-2">
+              {/* Info */}
+              {[
+                { title: "Status", text: movie.status },
+                { title: "Original Language", text: movie.original_language },
+                {
+                  title: "Budget",
+                  text: currencyFormatter.format(movie.budget),
+                },
+                {
+                  title: "Revenue",
+                  text: currencyFormatter.format(movie.revenue),
+                },
+              ].map((item, index) => (
+                <div key={index} className="basis-1/2 p-2">
+                  <p className="font-bold underline">{item.title}</p>
+                  <p className="mt-1">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </DetailSection>
+
           {/* Keywords */}
           <Keywords movie={movie} />
         </div>
       </section>
-    </>
+    </div>
   );
 }
