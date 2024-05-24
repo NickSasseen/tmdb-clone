@@ -1,5 +1,7 @@
 "use client";
 
+import { HiHomeModern, HiTicket, HiTv } from "react-icons/hi2";
+
 interface MenuItem {
   text: string;
   href: string;
@@ -8,21 +10,46 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { text: "Home", href: "/" },
-  { text: "Movies", href: "/movies" },
-  { text: "TV Shows", href: "/tv-shows" },
+  { text: "Home", href: "/", icon: <HiHomeModern /> },
+  { text: "Movies", href: "/movies", icon: <HiTicket /> },
+  { text: "TV Shows", href: "/tv-shows", icon: <HiTv /> },
 ];
 
 export default function MyNavbar({ children }: { children: any }) {
   function myMenuItems() {
     return menuItems.map((item) => (
       <li key={item.href}>
-        <a href={item.href}>{item.text}</a>
+        <a href={item.href} className="flex items-center space-x-2">
+          <span>{item.icon !== undefined && item.icon}</span>
+          <span>{item.text}</span>
+        </a>
       </li>
     ));
   }
 
-  const navbar = (
+  const bigNavbar = (
+    <div className="navbar h-20 bg-gray-900 px-8">
+      <div className="navbar-start space-x-10">
+        {/* Icon */}
+        <a href="/" className="text-xl">
+          <img src="/favicon.ico" className="h-6 sm:h-9" alt="site logo" />
+        </a>
+        {/* Menu items */}
+        {menuItems.map((item, index) => (
+          <a
+            key={index}
+            href={item.href}
+            className="flex items-center space-x-2 hover:text-primary"
+          >
+            <span>{item.icon !== undefined && item.icon}</span>
+            <span>{item.text}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+
+  const smallNavbar = (
     <div className="navbar bg-gray-900">
       <div className="navbar-start">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -82,7 +109,8 @@ export default function MyNavbar({ children }: { children: any }) {
 
       <div className="drawer-content flex flex-col min-h-screen">
         {/* Navbar */}
-        {navbar}
+        <div className="md:hidden">{smallNavbar}</div>
+        <div className="hidden md:block">{bigNavbar}</div>
 
         {/* Page content here */}
         {children}
