@@ -1,9 +1,9 @@
 import TMDB from "@/services/tmdb";
 import { HiArrowRight } from "react-icons/hi";
 import { MovieDetailComponent } from "./[id]";
-import { DetailSection } from "./DetailSection";
+import DetailSection from "./DetailSection";
 
-export const Cast = ({ movie }: MovieDetailComponent) => {
+const Cast = ({ movie }: MovieDetailComponent) => {
   const topTenCastMembers = movie.credits.cast
     .sort((first, second) => second.popularity - first.popularity)
     .slice(0, 10);
@@ -35,3 +35,5 @@ export const Cast = ({ movie }: MovieDetailComponent) => {
     </DetailSection>
   );
 };
+
+export default Cast;

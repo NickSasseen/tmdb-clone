@@ -1,9 +1,10 @@
-import { DetailSection } from "./DetailSection";
+import DetailSection from "./DetailSection";
+
 import { MovieDetailComponent } from "./[id]";
 import YouTube from "react-youtube";
 import React from "react";
 
-export const Trailers = ({ movie }: MovieDetailComponent) => {
+const Trailers = ({ movie }: MovieDetailComponent) => {
   const {
     videos: { results: videos },
   } = movie;
@@ -21,3 +22,5 @@ export const Trailers = ({ movie }: MovieDetailComponent) => {
     </DetailSection>
   );
 };
+
+export default Trailers;

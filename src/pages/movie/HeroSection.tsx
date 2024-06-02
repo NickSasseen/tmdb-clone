@@ -6,7 +6,7 @@ import {
 } from "react-icons/hi";
 import { MovieDetailComponent } from "./[id]";
 
-export const HeroSection = ({ movie, className }: MovieDetailComponent) => {
+const HeroSection = ({ movie, className }: MovieDetailComponent) => {
   const hrs = Math.floor(movie.runtime / 60);
   const mins = movie.runtime % 60;
   const runtime = `${hrs}hrs ${mins}m`;
@@ -91,3 +91,5 @@ export const HeroSection = ({ movie, className }: MovieDetailComponent) => {
     </div>
   );
 };
+
+export default HeroSection;

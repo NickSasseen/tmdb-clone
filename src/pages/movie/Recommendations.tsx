@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { DetailSection } from "./DetailSection";
+import DetailSection from "./DetailSection";
+
 import { MovieDetailComponent } from "./[id]";
 import TMDB from "@/services/tmdb";
 
-export const Recommendations = ({ movie }: MovieDetailComponent) => {
+const Recommendations = ({ movie }: MovieDetailComponent) => {
   const {
     recommendations: { results: recs },
   } = movie;
@@ -34,3 +35,5 @@ export const Recommendations = ({ movie }: MovieDetailComponent) => {
     </DetailSection>
   );
 };
+
+export default Recommendations;

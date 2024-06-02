@@ -1,9 +1,9 @@
 import useCollection from "@/hooks/useCollection";
 import TMDB from "@/services/tmdb";
-import { DetailSection } from "./DetailSection";
+import DetailSection from "./DetailSection";
 import { MovieDetailComponent } from "./[id]";
 
-export const Collection = ({ movie }: MovieDetailComponent) => {
+const Collection = ({ movie }: MovieDetailComponent) => {
   const { collection, loading } = useCollection(movie.belongs_to_collection.id);
 
   if (loading) return <p>Loading...</p>;
@@ -33,3 +33,5 @@ export const Collection = ({ movie }: MovieDetailComponent) => {
     </DetailSection>
   );
 };
+
+export default Collection;

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export const DetailSection = ({
+const DetailSection = ({
   title,
   children,
 }: {
@@ -16,3 +16,5 @@ export const DetailSection = ({
     </div>
   );
 };
+
+export default DetailSection;

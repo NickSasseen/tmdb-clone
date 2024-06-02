@@ -1,7 +1,7 @@
-import { DetailSection } from "./DetailSection";
+import DetailSection from "./DetailSection";
 import { MovieDetailComponent } from "./[id]";
 
-export const Keywords = ({ movie }: MovieDetailComponent) => {
+const Keywords = ({ movie }: MovieDetailComponent) => {
   return (
     <DetailSection title="Keywords">
       <div className="flex flex-wrap">
@@ -17,3 +17,5 @@ export const Keywords = ({ movie }: MovieDetailComponent) => {
     </DetailSection>
   );
 };
+
+export default Keywords;
