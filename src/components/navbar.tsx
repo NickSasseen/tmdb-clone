@@ -1,6 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { HiSearch } from "react-icons/hi";
 import { HiHomeModern, HiTicket, HiTv } from "react-icons/hi2";
+import SearchButton from "./search-button";
 
 interface MenuItem {
   text: string;
@@ -19,10 +22,10 @@ export default function MyNavbar({ children }: { children: any }) {
   function myMenuItems() {
     return menuItems.map((item) => (
       <li key={item.href}>
-        <a href={item.href} className="flex items-center space-x-2">
+        <Link href={item.href} className="flex items-center space-x-2">
           <span>{item.icon !== undefined && item.icon}</span>
           <span>{item.text}</span>
-        </a>
+        </Link>
       </li>
     ));
   }
@@ -31,20 +34,24 @@ export default function MyNavbar({ children }: { children: any }) {
     <div className="navbar h-20 bg-gray-900 px-8">
       <div className="navbar-start space-x-10">
         {/* Icon */}
-        <a href="/" className="text-xl">
+        <Link href="/" className="text-xl">
           <img src="/favicon.ico" className="h-6 sm:h-9" alt="site logo" />
-        </a>
+        </Link>
         {/* Menu items */}
         {menuItems.map((item, index) => (
-          <a
+          <Link
             key={index}
             href={item.href}
             className="flex items-center space-x-2 hover:text-primary"
           >
             <span>{item.icon !== undefined && item.icon}</span>
             <span>{item.text}</span>
-          </a>
+          </Link>
         ))}
+      </div>
+
+      <div className="navbar-end">
+        <SearchButton />
       </div>
     </div>
   );
@@ -77,9 +84,9 @@ export default function MyNavbar({ children }: { children: any }) {
       </div>
 
       <div className="navbar-center">
-        <a href="/" className="text-xl">
+        <Link href="/" className="text-xl">
           <img src="/favicon.ico" className="h-6 sm:h-9" alt="site logo" />
-        </a>
+        </Link>
       </div>
 
       <div className="navbar-end">

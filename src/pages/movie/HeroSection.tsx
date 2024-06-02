@@ -27,6 +27,8 @@ export const HeroSection = ({ movie, className }: MovieDetailComponent) => {
     </div>
   );
 
+  const style: { [key: string]: string } = { "--value": vote };
+
   return (
     <div
       className={`hero ${className}`}
@@ -71,7 +73,7 @@ export const HeroSection = ({ movie, className }: MovieDetailComponent) => {
 
           <div
             className="radial-progress text-primary"
-            style={{ "--value": vote }}
+            style={style}
             role="progressbar"
           >
             {vote}%

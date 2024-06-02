@@ -7,7 +7,7 @@ import { Cast } from "./Cast";
 import { DetailSection } from "./DetailSection";
 import { Collection } from "./Collection";
 import { Keywords } from "./Keywords";
-import { Media } from "./Media";
+import { Trailers } from "./Trailers";
 import { Recommendations } from "./Recommendations";
 
 export type MovieDetailComponent = {
@@ -23,8 +23,8 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 export default function MyMovie() {
   const router = useRouter();
   const { id } = router.query;
-  if (!id) return <p>Uh oh....</p>;
   const { movie, loading } = useMovie(parseInt(id as string));
+  if (!id) return <p>Uh oh....</p>;
 
   if (loading) return <p>Loading...</p>;
   if (!movie) return <p>no movie found</p>;
@@ -67,7 +67,7 @@ export default function MyMovie() {
 
           {movie.belongs_to_collection?.id && <Collection movie={movie} />}
 
-          <Media movie={movie} />
+          <Trailers movie={movie} />
           <Recommendations movie={movie} />
         </div>
 

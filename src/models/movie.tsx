@@ -4,6 +4,7 @@ import CrewMember from "./crewMember";
 import { PagedResponse } from "./paged-response";
 import { IdAndName } from "@/types";
 import Video from "./video";
+import Image from "./image";
 
 export default interface Movie {
   adult: boolean;
@@ -57,9 +58,9 @@ export default interface Movie {
   };
   reviews: PagedResponse<Review>;
   images: {
-    backdrops: any[];
-    logos: any[];
-    posters: any[];
+    backdrops: Image[];
+    logos: Image[];
+    posters: Image[];
   };
   recommendations: PagedResponse<Movie>;
   videos: {

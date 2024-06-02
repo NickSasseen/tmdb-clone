@@ -5,20 +5,22 @@ import { useEffect, useState } from "react";
 const useMovie = (id: number) => {
   const [movie, setMovie] = useState<Movie>();
   const [loading, setLoading] = useState<boolean>(false);
-  const appendToResponse = [
-    "keywords",
-    "credits",
-    "images",
-    "videos",
-    "recommendations",
-  ];
-
+  
   useEffect(() => {
     setLoading(true);
+
+    const appendToResponse = [
+      "keywords",
+      "credits",
+      "images",
+      "videos",
+      "recommendations",
+    ];
+
     TMDB.get<Movie>(
       `/movie/${id}?append_to_response=${appendToResponse.join(
         ","
-      )}&language=en-US`
+      )}&include_image_language=en&language=en-US`
     )
       .then(({ data }) => {
         console.log("movie", data);

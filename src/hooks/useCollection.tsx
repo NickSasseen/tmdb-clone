@@ -11,7 +11,6 @@ const useCollection = (id: number) => {
     setLoading(true);
     TMDB.get<Collection>(`/collection/${id}`)
       .then(({ data }) => {
-        console.log("collection", data);
         setCollection(data);
       })
       .catch(console.error)
