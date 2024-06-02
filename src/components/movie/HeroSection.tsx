@@ -4,9 +4,9 @@ import {
   HiOutlineHeart,
   HiOutlineViewList,
 } from "react-icons/hi";
-import { MovieDetailComponent } from "./[id]";
+import { MovieDetailComponentProps } from "../../pages/movie/[id]";
 
-const HeroSection = ({ movie, className }: MovieDetailComponent) => {
+const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
   const hrs = Math.floor(movie.runtime / 60);
   const mins = movie.runtime % 60;
   const runtime = `${hrs}hrs ${mins}m`;

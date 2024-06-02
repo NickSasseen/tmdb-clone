@@ -2,15 +2,15 @@ import useMovie from "@/hooks/useMovie";
 import Movie from "@/models/movie";
 import TMDB, { TMDB_IMG_BASE } from "@/services/tmdb";
 import { useRouter } from "next/router";
-import { HeroSection } from "./HeroSection";
-import { Cast } from "./Cast";
-import { DetailSection } from "./DetailSection";
-import { Collection } from "./Collection";
-import { Keywords } from "./Keywords";
-import { Trailers } from "./Trailers";
-import { Recommendations } from "./Recommendations";
+import HeroSection from "../../components/movie/HeroSection";
+import Cast from "../../components/movie/Cast";
+import Collection from "../../components/movie/Collection";
+import Trailers from "../../components/movie/Trailers";
+import Recommendations from "../../components/movie/Recommendations";
+import DetailSection from "../../components/movie/DetailSection";
+import Keywords from "../../components/movie/Keywords";
 
-export type MovieDetailComponent = {
+export type MovieDetailComponentProps = {
   movie: Movie;
   className?: string;
 };

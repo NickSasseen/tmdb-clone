@@ -1,10 +1,10 @@
 import Link from "next/link";
 import DetailSection from "./DetailSection";
 
-import { MovieDetailComponent } from "./[id]";
+import { MovieDetailComponentProps } from "../../pages/movie/[id]";
 import TMDB from "@/services/tmdb";
 
-const Recommendations = ({ movie }: MovieDetailComponent) => {
+const Recommendations = ({ movie }: MovieDetailComponentProps) => {
   const {
     recommendations: { results: recs },
   } = movie;

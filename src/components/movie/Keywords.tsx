@@ -1,7 +1,7 @@
 import DetailSection from "./DetailSection";
-import { MovieDetailComponent } from "./[id]";
+import { MovieDetailComponentProps } from "../../pages/movie/[id]";
 
-const Keywords = ({ movie }: MovieDetailComponent) => {
+const Keywords = ({ movie }: MovieDetailComponentProps) => {
   return (
     <DetailSection title="Keywords">
       <div className="flex flex-wrap">

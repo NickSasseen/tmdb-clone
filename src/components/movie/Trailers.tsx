@@ -1,10 +1,10 @@
 import DetailSection from "./DetailSection";
 
-import { MovieDetailComponent } from "./[id]";
+import { MovieDetailComponentProps } from "../../pages/movie/[id]";
 import YouTube from "react-youtube";
 import React from "react";
 
-const Trailers = ({ movie }: MovieDetailComponent) => {
+const Trailers = ({ movie }: MovieDetailComponentProps) => {
   const {
     videos: { results: videos },
   } = movie;
