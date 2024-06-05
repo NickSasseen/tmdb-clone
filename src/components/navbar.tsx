@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { HiSearch } from "react-icons/hi";
 import { HiHomeModern, HiTicket, HiTv } from "react-icons/hi2";
-import SearchButton from "./search-button";
 
 interface MenuItem {
   text: string;
@@ -42,7 +39,7 @@ export default function MyNavbar({ children }: { children: any }) {
           <Link
             key={index}
             href={item.href}
-            className="flex items-center space-x-2 hover:text-primary"
+            className="flex items-center space-x-2 hover:text-primary btn btn-ghost"
           >
             <span>{item.icon !== undefined && item.icon}</span>
             <span>{item.text}</span>
@@ -51,7 +48,9 @@ export default function MyNavbar({ children }: { children: any }) {
       </div>
 
       <div className="navbar-end">
-        <SearchButton />
+        <Link className="btn btn-ghost text-2xl" href="/search">
+          <HiSearch />
+        </Link>
       </div>
     </div>
   );

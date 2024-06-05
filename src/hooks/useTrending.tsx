@@ -15,7 +15,6 @@ const useTrending = (timeWindow: TimeWindow, mediaType: MediaType = "all") => {
     TMDB.get<PagedResponse<MovieOrShow>>(`trending/${mt}/${tw}`)
       .then(({ data: { results } }) => {
         setTrending(results);
-        console.log(results);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
