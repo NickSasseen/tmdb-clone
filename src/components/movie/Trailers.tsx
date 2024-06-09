@@ -22,7 +22,6 @@ const Trailers = ({ movie }: MovieDetailComponentProps) => {
               className="w-full"
               src={"https://www.youtube.com/embed/" + trailer.key}
             ></iframe>
-            {/* <YouTube videoId={trailer.key} iframeClassName="w-full" /> */}
           </div>
         ))}
       </div>

@@ -10,7 +10,7 @@ const Recommendations = ({ movie }: MovieDetailComponentProps) => {
   } = movie;
   return (
     <DetailSection title="Recommendations">
-      <div className="carousel carousel-start">
+      <div className="carousel carousel-center">
         {recs
           .filter((r) => !!r.backdrop_path)
           .map((rec, index) => (
