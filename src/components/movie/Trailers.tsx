@@ -14,8 +14,15 @@ const Trailers = ({ movie }: MovieDetailComponentProps) => {
     <DetailSection title="Trailers">
       <div className="carousel">
         {trailers.map((trailer, index) => (
-          <div className="carousel-item max-w-screen" key={trailer.key}>
-            <YouTube videoId={trailer.key} />
+          <div
+            className="carousel-item basis-7/12 md:basis-1/3 pr-4 max-w-screen"
+            key={trailer.key}
+          >
+            <iframe
+              className="w-full"
+              src={"https://www.youtube.com/embed/" + trailer.key}
+            ></iframe>
+            {/* <YouTube videoId={trailer.key} iframeClassName="w-full" /> */}
           </div>
         ))}
       </div>
