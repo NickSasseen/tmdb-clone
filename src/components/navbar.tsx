@@ -11,7 +11,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { text: "Home", href: "/", icon: <HiHomeModern /> },
-  { text: "Movies", href: "/movies", icon: <HiTicket /> },
+  { text: "Movies", href: "/movie/search", icon: <HiTicket /> },
   { text: "TV Shows", href: "/tv-shows", icon: <HiTv /> },
 ];
 

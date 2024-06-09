@@ -41,7 +41,7 @@ const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
     >
       <div className="hero-overlay bg-opacity-80"></div>
 
-      <div className="hero-content text-neutral-content p-8 w-full">
+      <div className="hero-content text-neutral-content p-8 w-full justify-start md:justify-normal">
         <div className="basis-1/4">
           <img
             className="rounded-md"
@@ -49,7 +49,7 @@ const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
           />
         </div>
 
-        <div className="flex-1 p-4 self-start space-y-4">
+        <div className="flex-1 p-4 self-start space-y-4 hidden md:block">
           <h1 className="font-bold text-4xl">
             {movie.title}{" "}
             {movie.release_date && (

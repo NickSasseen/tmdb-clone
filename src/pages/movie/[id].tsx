@@ -31,32 +31,18 @@ export default function MyMovie() {
 
   return (
     <div className="max-w-full">
-      <HeroSection className="hidden md:grid" movie={movie} />
+      <HeroSection movie={movie} />
 
       <div className="md:hidden">
-        {/* Backdrop */}
-        <img
-          className="w-full"
-          src={TMDB.getImageUrl(movie.backdrop_path, "w1280")}
-          alt={movie.title}
-        />
-
-        <div className="flex p-4">
-          <div className="basis-1/3">
-            <img
-              className="rounded-md"
-              src={TMDB.getImageUrl(movie.poster_path)}
-              alt={movie.title}
-            />
-          </div>
-
-          <div className="flex-1 px-2">
-            <div className="card bg-base-100 shadow-xl rounded-md">
-              <div className="card-body">
-                <h2 className="card-title">{movie.title}</h2>
-              </div>
-            </div>
-          </div>
+        <div className="p-4">
+          <h2 className="font-bold text-xl text-center">
+            {movie.title}{" "}
+            {movie.release_date && (
+              <span className="font-thin text-lg">
+                ({new Date(movie.release_date).getFullYear()})
+              </span>
+            )}
+          </h2>
         </div>
       </div>
 

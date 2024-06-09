@@ -11,15 +11,16 @@ const Collection = ({ movie }: MovieDetailComponentProps) => {
 
   return (
     <DetailSection title="Collection">
-      <div
-        className="card bg-base-100 shadow-xl img-full h-80"
-        style={{
-          backgroundImage: `url(${TMDB.getImageUrl(
-            movie.belongs_to_collection.backdrop_path,
-            "w1280"
-          )})`,
-        }}
-      >
+      <div className="card w-full bg-base-100 shadow-xl image-full">
+        <figure>
+          <img
+            src={TMDB.getImageUrl(
+              movie.belongs_to_collection.backdrop_path,
+              "w1280"
+            )}
+            alt={movie.belongs_to_collection.name}
+          />
+        </figure>
         <div className="card-body">
           <h2 className="card-title">Part of the {collection.name}</h2>
           <p>
