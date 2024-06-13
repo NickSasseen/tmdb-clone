@@ -28,7 +28,7 @@ export default function Trending({ carousel, showMediaType }: TrendingProps) {
 
   const getCarouselItem = (item: MovieOrShow, index: number) => {
     const title: string = isMovie(item) ? item.title : item.name;
-    const type: string = isMovie(item) ? "movie" : "tv";
+    const type: string = isMovie(item) ? "movie" : "tv-show";
     return (
       <Link
         key={item.id}
