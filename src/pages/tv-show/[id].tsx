@@ -1,4 +1,4 @@
-import HeroSection from "@/components/movie/HeroSection";
+import HeroSection from "@/components/shared/hero-section";
 import useTvShow from "@/hooks/useTvShow";
 import { useRouter } from "next/router";
 
@@ -11,7 +11,11 @@ const TvShow = () => {
   if (loading) return <p>Loading...</p>;
   if (!tvShow) return <p>no movie found</p>;
 
-  return <div className="max-w-full">{tvShow.name}</div>;
+  return (
+    <div className="max-w-full">
+      <HeroSection item={tvShow} />
+    </div>
+  );
 };
 
 export default TvShow;

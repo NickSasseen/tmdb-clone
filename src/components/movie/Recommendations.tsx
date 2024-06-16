@@ -1,13 +1,15 @@
 import Link from "next/link";
 import DetailSection from "./DetailSection";
 
-import { MovieDetailComponentProps } from "../../pages/movie/[id]";
+import { DetailComponentProps } from "../../pages/movie/[id]";
 import TMDB from "@/services/tmdb";
+import Movie from "@/models/movie";
 
-const Recommendations = ({ movie }: MovieDetailComponentProps) => {
+const Recommendations = ({ item }: DetailComponentProps) => {
+  item = item as Movie;
   const {
     recommendations: { results: recs },
-  } = movie;
+  } = item;
   return (
     <DetailSection title="Recommendations">
       <div className="carousel carousel-center">

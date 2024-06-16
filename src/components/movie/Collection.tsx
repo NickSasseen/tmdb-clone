@@ -1,9 +1,12 @@
 import useCollection from "@/hooks/useCollection";
 import TMDB from "@/services/tmdb";
 import DetailSection from "./DetailSection";
-import { MovieDetailComponentProps } from "../../pages/movie/[id]";
+import { DetailComponentProps } from "../../pages/movie/[id]";
+import Movie from "@/models/movie";
 
-const Collection = ({ movie }: MovieDetailComponentProps) => {
+const Collection = ({ item }: DetailComponentProps) => {
+  const movie = item as Movie;
+
   const { collection, loading } = useCollection(movie.belongs_to_collection.id);
 
   if (loading) return <p>Loading...</p>;

@@ -1,13 +1,15 @@
 import DetailSection from "./DetailSection";
 
-import { MovieDetailComponentProps } from "../../pages/movie/[id]";
+import { DetailComponentProps } from "../../pages/movie/[id]";
 import YouTube from "react-youtube";
 import React from "react";
+import Movie from "@/models/movie";
 
-const Trailers = ({ movie }: MovieDetailComponentProps) => {
+const Trailers = ({ item }: DetailComponentProps) => {
+  item = item as Movie;
   const {
     videos: { results: videos },
-  } = movie;
+  } = item;
   const trailers = videos.filter((v) => v.type === "Trailer");
 
   return (

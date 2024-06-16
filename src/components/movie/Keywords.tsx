@@ -1,11 +1,14 @@
 import DetailSection from "./DetailSection";
-import { MovieDetailComponentProps } from "../../pages/movie/[id]";
+import { DetailComponentProps } from "../../pages/movie/[id]";
+import Movie from "@/models/movie";
 
-const Keywords = ({ movie }: MovieDetailComponentProps) => {
+const Keywords = ({ item }: DetailComponentProps) => {
+  item = item as Movie;
+
   return (
     <DetailSection title="Keywords">
       <div className="flex flex-wrap">
-        {movie.keywords.keywords.map((keyword, index) => (
+        {item.keywords.keywords.map((keyword, index) => (
           <button
             key={index}
             className="btn btn-outline btn-error text-md mr-2 my-1"

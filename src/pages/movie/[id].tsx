@@ -1,8 +1,7 @@
 import useMovie from "@/hooks/useMovie";
 import Movie from "@/models/movie";
-import TMDB, { TMDB_IMG_BASE } from "@/services/tmdb";
 import { useRouter } from "next/router";
-import HeroSection from "../../components/movie/HeroSection";
+import HeroSection from "../../components/shared/hero-section";
 import Cast from "../../components/movie/Cast";
 import Collection from "../../components/movie/Collection";
 import Trailers from "../../components/movie/Trailers";
@@ -12,9 +11,10 @@ import Keywords from "../../components/movie/Keywords";
 import RadialProgress from "@/components/shared/radial-progress";
 import { getRuntime } from "@/services/shared";
 import { HiPlay } from "react-icons/hi";
+import TvShow from "@/models/tv-show";
 
-export type MovieDetailComponentProps = {
-  movie: Movie;
+export type DetailComponentProps = {
+  item: Movie | TvShow;
   className?: string;
 };
 
@@ -47,7 +47,7 @@ export default function MyMovie() {
 
   return (
     <div className="max-w-full">
-      <HeroSection movie={movie} />
+      <HeroSection item={movie} />
 
       <div className="md:hidden">
         <div className="p-4 space-y-2">
@@ -100,12 +100,12 @@ export default function MyMovie() {
       <section className="p-4 md:flex md:p-8 md:space-x-4">
         <div className="md:basis-3/4 space-y-4 overflow-x-auto">
           {/* Cast */}
-          <Cast movie={movie} />
+          <Cast item={movie} />
 
-          {movie.belongs_to_collection?.id && <Collection movie={movie} />}
+          {movie.belongs_to_collection?.id && <Collection item={movie} />}
 
-          <Trailers movie={movie} />
-          <Recommendations movie={movie} />
+          <Trailers item={movie} />
+          <Recommendations item={movie} />
         </div>
 
         <div className="md:flex-1 space-y-4">
@@ -133,7 +133,7 @@ export default function MyMovie() {
           </DetailSection>
 
           {/* Keywords */}
-          <Keywords movie={movie} />
+          <Keywords item={movie} />
         </div>
       </section>
     </div>

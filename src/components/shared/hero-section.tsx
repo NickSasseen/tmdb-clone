@@ -4,14 +4,12 @@ import {
   HiOutlineHeart,
   HiOutlineViewList,
 } from "react-icons/hi";
-import { MovieDetailComponentProps } from "../../pages/movie/[id]";
+import { DetailComponentProps } from "../../pages/movie/[id]";
+import { getRuntime } from "@/services/shared";
+import { MovieOrShow } from "@/types";
 
-const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
-  const hrs = Math.floor(movie.runtime / 60);
-  const mins = movie.runtime % 60;
-  const runtime = `${hrs}hrs ${mins}m`;
-
-  const vote = (movie.vote_average * 10).toFixed(0);
+const HeroSection = ({ item, className }: DetailComponentProps) => {
+  const getVote = (voteAverage: number) => (voteAverage * 10).toFixed(0);
 
   const buttonRow = (
     <div className="flex space-x-5">
@@ -27,14 +25,16 @@ const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
     </div>
   );
 
-  const style: { [key: string]: string } = { "--value": vote };
+  const style: { [key: string]: string } = {
+    "--value": getVote(item.vote_average),
+  };
 
   return (
     <div
       className={`hero ${className}`}
       style={{
         backgroundImage: `url(${TMDB.getImageUrl(
-          movie.backdrop_path,
+          item.backdrop_path,
           "w1280"
         )})`,
       }}
@@ -45,30 +45,23 @@ const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
         <div className="basis-1/4">
           <img
             className="rounded-md"
-            src={TMDB.getImageUrl(movie.poster_path)}
+            src={TMDB.getImageUrl(item.poster_path)}
           />
         </div>
 
         <div className="flex-1 p-4 self-start space-y-4 hidden md:block">
-          <h1 className="font-bold text-4xl">
-            {movie.title}{" "}
-            {movie.release_date && (
-              <span className="font-thin">
-                ({new Date(movie.release_date).getFullYear()})
-              </span>
-            )}
-          </h1>
+          <TitleAndReleaseDate item={item} />
 
           <h3 className="flex space-x-4 items-center text-lg">
             <div className="space-x-1">
-              {movie.genres.map((genre) => (
+              {item.genres.map((genre) => (
                 // change these to buttons later
                 <div key={genre.id} className="badge badge-outline px-2 py-4">
                   {genre.name}
                 </div>
               ))}
             </div>
-            <span>{runtime}</span>
+            {"title" in item && <span>{getRuntime(item.runtime)}</span>}
           </h3>
 
           <div
@@ -76,20 +69,48 @@ const HeroSection = ({ movie, className }: MovieDetailComponentProps) => {
             style={style}
             role="progressbar"
           >
-            {vote}%
+            {getVote(item.vote_average)}%
           </div>
 
           {buttonRow}
 
           <div>
-            <p className="italic font-thin text-lg mb-2">{movie.tagline}</p>
+            <p className="italic font-thin text-lg mb-2">{item.tagline}</p>
             <h2 className="font-bold text-xl">Overview </h2>
-            <p>{movie.overview}</p>
+            <p>{item.overview}</p>
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+const TitleAndReleaseDate = ({ item }: { item: MovieOrShow }) => {
+  if ("title" in item) {
+    return (
+      <h1 className="font-bold text-4xl">
+        {item.title}{" "}
+        {item.release_date && (
+          <span className="font-thin">
+            ({new Date(item.release_date).getFullYear()})
+          </span>
+        )}
+      </h1>
+    );
+  }
+
+  if ("name" in item) {
+    return (
+      <h1 className="font-bold text-4xl">
+        {item.name}{" "}
+        {item.first_air_date && (
+          <span className="font-thin">
+            ({new Date(item.first_air_date).getFullYear()})
+          </span>
+        )}
+      </h1>
+    );
+  }
 };
 
 export default HeroSection;
