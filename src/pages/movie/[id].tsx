@@ -49,7 +49,7 @@ export default function MyMovie() {
     <div className="max-w-full">
       <HeroSection item={movie} />
 
-      <div className="md:hidden">
+      <div className="sm:hidden">
         <div className="p-4 space-y-2">
           <h2 className="font-bold text-xl text-center">
             {movie.title}{" "}

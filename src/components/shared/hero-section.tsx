@@ -49,7 +49,7 @@ const HeroSection = ({ item, className }: DetailComponentProps) => {
           />
         </div>
 
-        <div className="flex-1 p-4 self-start space-y-4 hidden md:block">
+        <div className="flex-1 p-4 self-start space-y-4 hidden sm:block">
           <TitleAndReleaseDate item={item} />
 
           <h3 className="flex space-x-4 items-center text-lg">
