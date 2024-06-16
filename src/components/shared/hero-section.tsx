@@ -42,7 +42,7 @@ const HeroSection = ({ item, className }: DetailComponentProps) => {
       <div className="hero-overlay bg-opacity-80"></div>
 
       <div className="hero-content text-neutral-content p-8 w-full justify-start md:justify-normal">
-        <div className="basis-1/4">
+        <div className="basis-1/3 md:basis-1/4">
           <img
             className="rounded-md"
             src={TMDB.getImageUrl(item.poster_path)}
