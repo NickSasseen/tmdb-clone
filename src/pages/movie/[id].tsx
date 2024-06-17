@@ -9,7 +9,7 @@ import Recommendations from "../../components/movie/Recommendations";
 import DetailSection from "../../components/movie/DetailSection";
 import Keywords from "../../components/movie/Keywords";
 import RadialProgress from "@/components/shared/radial-progress";
-import { getRuntime } from "@/services/shared";
+import { getFormattedDate, getRuntime } from "@/services/shared";
 import { HiPlay } from "react-icons/hi";
 import TvShow from "@/models/tv-show";
 
@@ -33,17 +33,6 @@ export default function MyMovie() {
   if (!movie) return <p>no movie found</p>;
 
   const vote = (movie.vote_average * 10).toFixed(0);
-
-  const getFormattedDate = (date: string) => {
-    const pad = (x: number) => x.toString().padStart(2, "0");
-
-    const theDate = new Date(date);
-    const day = pad(theDate.getDate());
-    const month = pad(theDate.getMonth() + 1);
-    const year = theDate.getFullYear();
-
-    return [month, day, year].join("/");
-  };
 
   return (
     <div className="max-w-full">

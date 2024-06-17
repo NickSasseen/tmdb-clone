@@ -3,3 +3,14 @@ export const getRuntime = (time: number) => {
   const mins = time % 60;
   return `${hrs}hrs ${mins}m`;
 };
+
+export const getFormattedDate = (date: string) => {
+  const pad = (x: number) => x.toString().padStart(2, "0");
+
+  const theDate = new Date(date);
+  const day = pad(theDate.getDate());
+  const month = pad(theDate.getMonth() + 1);
+  const year = theDate.getFullYear();
+
+  return [month, day, year].join("/");
+};
