@@ -1,10 +1,10 @@
 import TMDB from "@/services/tmdb";
 import { HiArrowRight } from "react-icons/hi";
 import { DetailComponentProps } from "../../pages/movie/[id]";
-import DetailSection from "./detail-section";
+import DetailSection from "./DetailSection";
 import Movie from "@/models/movie";
 
-const Cast = ({ item, sectionTitle }: DetailComponentProps) => {
+const Cast = ({ item }: DetailComponentProps) => {
   const movie = item as Movie;
 
   const topTenCastMembers = movie.credits.cast
@@ -12,7 +12,7 @@ const Cast = ({ item, sectionTitle }: DetailComponentProps) => {
     .slice(0, 10);
 
   return (
-    <DetailSection title={sectionTitle}>
+    <DetailSection title="Top Billed Cast">
       <div className="carousel carousel-center p-4 space-x-4">
         {topTenCastMembers.map((castMember) => (
           <div key={castMember.id} className="carousel-item w-1/3 md:w-1/6">

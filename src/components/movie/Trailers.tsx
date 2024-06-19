@@ -1,4 +1,4 @@
-import DetailSection from "../shared/detail-section";
+import DetailSection from "./DetailSection";
 
 import { DetailComponentProps } from "../../pages/movie/[id]";
 import YouTube from "react-youtube";

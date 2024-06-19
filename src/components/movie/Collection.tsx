@@ -1,6 +1,6 @@
 import useCollection from "@/hooks/useCollection";
 import TMDB from "@/services/tmdb";
-import DetailSection from "../shared/detail-section";
+import DetailSection from "./DetailSection";
 import { DetailComponentProps } from "../../pages/movie/[id]";
 import Movie from "@/models/movie";
 

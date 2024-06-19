@@ -14,8 +14,3 @@ export const getFormattedDate = (date: string) => {
 
   return [month, day, year].join("/");
 };
-
-export const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});

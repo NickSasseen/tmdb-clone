@@ -4,7 +4,7 @@ const DetailSection = ({
   title,
   children,
 }: {
-  title?: string;
+  title: string;
   children?: ReactNode;
 }) => {
   return (

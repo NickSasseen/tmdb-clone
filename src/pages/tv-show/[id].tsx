@@ -1,9 +1,7 @@
-import Cast from "@/components/shared/cast";
-import DetailSection from "@/components/shared/detail-section";
 import HeroSection from "@/components/shared/hero-section";
 import RadialProgress from "@/components/shared/radial-progress";
 import useTvShow from "@/hooks/useTvShow";
-import { getFormattedDate } from "@/services/shared";
+import { getFormattedDate, getRuntime } from "@/services/shared";
 import { useRouter } from "next/router";
 import { HiPlay } from "react-icons/hi";
 
@@ -46,7 +44,7 @@ const TvShow = () => {
           <div className="flex justify-center items-baseline flex-wrap text-sm space-x-1 space-y-1">
             <span>{getFormattedDate(tvShow.first_air_date)}</span>
             <div className="divider divider-horizontal divider-error" />
-            <span>{tvShow.number_of_seasons} seasons</span>
+            {/* <span>{getRuntime(movie.runtime)}</span> */}
             <div className="divider divider-horizontal divider-error" />
             <button className="btn btn-sm btn-outline">
               <HiPlay />
@@ -69,36 +67,6 @@ const TvShow = () => {
           </div>
         </div>
       </div>
-
-      <section className="p-4 md:flex md:p-8 md:space-x-4">
-        <div className="md:basis-3/4 space-y-4 overflow-x-auto">
-          {/* Cast */}
-          <Cast item={tvShow} sectionTitle="Series Cast" />
-
-          {/* <Trailers item={movie} /> */}
-          {/* <Recommendations item={movie} /> */}
-        </div>
-
-        <div className="md:flex-1 space-y-4">
-          <DetailSection title="Information">
-            <div className="flex flex-wrap p-2">
-              {/* Info */}
-              {[
-                { title: "Status", text: tvShow.status },
-                { title: "Original Language", text: tvShow.original_language },
-              ].map((item, index) => (
-                <div key={index} className="basis-1/2 p-2">
-                  <p className="font-bold underline">{item.title}</p>
-                  <p className="mt-1">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </DetailSection>
-
-          {/* Keywords */}
-          {/* <Keywords item={tvShow} /> */}
-        </div>
-      </section>
     </div>
   );
 };
