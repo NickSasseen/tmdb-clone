@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DetailSection from "./DetailSection";
+import DetailSection from "../shared/detail-section";
 
 import { DetailComponentProps } from "../../pages/movie/[id]";
 import TMDB from "@/services/tmdb";

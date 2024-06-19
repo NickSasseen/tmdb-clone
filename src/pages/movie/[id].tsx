@@ -2,26 +2,26 @@ import useMovie from "@/hooks/useMovie";
 import Movie from "@/models/movie";
 import { useRouter } from "next/router";
 import HeroSection from "../../components/shared/hero-section";
-import Cast from "../../components/movie/Cast";
 import Collection from "../../components/movie/Collection";
 import Trailers from "../../components/movie/Trailers";
 import Recommendations from "../../components/movie/Recommendations";
-import DetailSection from "../../components/movie/DetailSection";
+import DetailSection from "../../components/shared/detail-section";
 import Keywords from "../../components/movie/Keywords";
 import RadialProgress from "@/components/shared/radial-progress";
-import { getFormattedDate, getRuntime } from "@/services/shared";
+import {
+  currencyFormatter,
+  getFormattedDate,
+  getRuntime,
+} from "@/services/shared";
 import { HiPlay } from "react-icons/hi";
 import TvShow from "@/models/tv-show";
+import Cast from "@/components/shared/cast";
 
 export type DetailComponentProps = {
   item: Movie | TvShow;
   className?: string;
+  sectionTitle?: string;
 };
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
 
 export default function MyMovie() {
   const router = useRouter();
@@ -89,7 +89,7 @@ export default function MyMovie() {
       <section className="p-4 md:flex md:p-8 md:space-x-4">
         <div className="md:basis-3/4 space-y-4 overflow-x-auto">
           {/* Cast */}
-          <Cast item={movie} />
+          <Cast item={movie} sectionTitle="Top Billed Cast" />
 
           {movie.belongs_to_collection?.id && <Collection item={movie} />}
 
