@@ -1,7 +1,7 @@
 import TMDB from "@/services/tmdb";
 import { HiArrowRight } from "react-icons/hi";
 import { DetailComponentProps } from "../../pages/movie/[id]";
-import DetailSection from "./DetailSection";
+import DetailSection from "../shared/detail-section";
 import Movie from "@/models/movie";
 
 const Cast = ({ item }: DetailComponentProps) => {

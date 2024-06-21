@@ -7,6 +7,7 @@ import { Sheet, SheetTrigger, SheetContent } from "../ui/sheet";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { menuItems } from "./menu-items";
+import HeartDialogButton from "./heart-button";
 
 const MobileToolbar = () => {
   return (
@@ -19,8 +20,8 @@ const MobileToolbar = () => {
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="left" className="sm:max-w-xs">
-          <nav className="grid gap-6 text-lg font-medium">
+        <SheetContent side="left" className="max-w-xs flex flex-col">
+          <nav className="flex flex-col space-y-4 text-lg font-medium">
             <Link
               href="#"
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:text-base"
@@ -30,6 +31,7 @@ const MobileToolbar = () => {
 
             {menuItems.map((item, index) => (
               <Link
+                key={index}
                 href={item.href}
                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
               >
@@ -37,6 +39,10 @@ const MobileToolbar = () => {
                 {item.text}
               </Link>
             ))}
+          </nav>
+
+          <nav className="flex flex-col mt-auto">
+            <HeartDialogButton />
           </nav>
         </SheetContent>
       </Sheet>

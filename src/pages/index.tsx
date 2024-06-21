@@ -13,7 +13,7 @@ export default function Home() {
       <MobileToolbar />
 
       <main
-        className={`flex min-h-screen flex-col md:justify-between p-4 md:p-24 ${inter.className}`}
+        className={`flex min-h-screen flex-col md:justify-between p-4 md:p-12 ${inter.className}`}
       >
         <Trending />
 

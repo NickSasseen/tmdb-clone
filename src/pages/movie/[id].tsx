@@ -6,7 +6,7 @@ import Cast from "../../components/movie/Cast";
 import Collection from "../../components/movie/Collection";
 import Trailers from "../../components/movie/Trailers";
 import Recommendations from "../../components/movie/Recommendations";
-import DetailSection from "../../components/movie/DetailSection";
+import DetailSection from "../../components/shared/detail-section";
 import Keywords from "../../components/movie/Keywords";
 import RadialProgress from "@/components/shared/radial-progress";
 import { getFormattedDate, getRuntime } from "@/services/shared";
