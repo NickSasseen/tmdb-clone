@@ -1,3 +1,4 @@
+"use client";
 import { RootLayout } from "@/components/layout";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -14,10 +15,6 @@ export default function Document() {
           enableSystem
           disableTransitionOnChange
         >
-          {/* <Navbar>
-            <Main />
-          </Navbar> */}
-
           <RootLayout>
             <Main />
           </RootLayout>
