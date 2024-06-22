@@ -1,6 +1,5 @@
 "use client";
 import { RootLayout } from "@/components/layout";
-import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Html, Head, Main, NextScript } from "next/document";
 
