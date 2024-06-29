@@ -26,20 +26,22 @@ export function RootLayout({ children }: { children: any }) {
               <img src="/favicon.ico" className="h-6 sm:h-9" alt="site logo" />
             </Link>
 
-            {menuItems.map((item, index) => (
-              <Tooltip key={index}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={item.href}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    {item.icon}
-                    <span className="sr-only">{item.text}</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">{item.text}</TooltipContent>
-              </Tooltip>
-            ))}
+            {menuItems
+              .filter((mi) => !mi.mobileOnly)
+              .map((item, index) => (
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={item.href}
+                      className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                    >
+                      {item.icon}
+                      <span className="sr-only">{item.text}</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right">{item.text}</TooltipContent>
+                </Tooltip>
+              ))}
           </nav>
 
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">
