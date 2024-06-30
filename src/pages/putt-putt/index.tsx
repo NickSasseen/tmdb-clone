@@ -82,18 +82,20 @@ const PuttPutt = () => {
             <tr>
               <th className="w-1/5"></th>
               {players.map((player) => (
-                <td className="text-lg capitalize">{player.name}</td>
+                <td key={player.name} className="text-lg capitalize">
+                  {player.name}
+                </td>
               ))}
             </tr>
           </thead>
           <tbody>
             {holes.map((hole) => (
-              <tr>
+              <tr key={hole}>
                 <td>
                   <span className="text-xs">#{hole}</span>
                 </td>
                 {players.map((player) => (
-                  <td className="text-center">
+                  <td key={player.name} className="text-center">
                     <Button
                       variant="outline"
                       className="w-12 h-12"
@@ -108,7 +110,9 @@ const PuttPutt = () => {
             <tr>
               <td>Total</td>
               {players.map((player) => (
-                <td className="text-center">{player.total}</td>
+                <td key={player.name} className="text-center">
+                  {player.total}
+                </td>
               ))}
             </tr>
           </tbody>
@@ -184,7 +188,7 @@ const AddPlayerModal = ({
         <div className="flex flex-wrap">
           {players &&
             players.map((player) => (
-              <div className="basis-1/2 p-1">
+              <div key={player.name} className="basis-1/2 p-1">
                 <Card className="flex-1 justify-center p-2">
                   <div className="flex items-center justify-between">
                     <span className="flex-1">{player.name}</span>
