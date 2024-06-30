@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Plus, PlusCircle, Skull, X } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 class PuttPuttPlayer {
   constructor(public name: string) {
@@ -35,6 +35,10 @@ class PuttPuttPlayer {
   }
 }
 
+const SESSION_STORAGE_KEYS = {
+  PLAYERS: "players",
+};
+
 const holes = Array.from({ length: 18 }, (_, i) => i + 1);
 
 const PuttPutt = () => {
@@ -50,6 +54,15 @@ const PuttPutt = () => {
     player: undefined,
   });
 
+  useEffect(() => {
+    // persist the players
+    const playerVal = sessionStorage.getItem(SESSION_STORAGE_KEYS.PLAYERS);
+    if (playerVal) {
+      const sessionPlayers = JSON.parse(playerVal) as PuttPuttPlayer[];
+      setPlayers(sessionPlayers);
+    }
+  }, []);
+
   const addScoreToPlayer = (
     player: PuttPuttPlayer,
     hole: number,
@@ -59,9 +72,14 @@ const PuttPutt = () => {
     const thisPlayer = copyOfPlayers.find(
       (p) => p.name === player.name
     ) as PuttPuttPlayer;
-    console.log(thisPlayer);
     thisPlayer.scores[hole] = score;
     setPlayers(copyOfPlayers);
+    // update session storage
+    // add to session storage
+    sessionStorage.setItem(
+      SESSION_STORAGE_KEYS.PLAYERS,
+      JSON.stringify(copyOfPlayers)
+    );
     closeModal();
   };
 
@@ -75,50 +93,63 @@ const PuttPutt = () => {
       player: undefined,
     });
 
+  const clear = () => {
+    setPlayers([]);
+    sessionStorage.removeItem(SESSION_STORAGE_KEYS.PLAYERS);
+  };
+
   return (
     <>
-      <div className="flex w-full max-h-screen p-4 overflow-y-auto">
-        <table className="table table-sm table-pin-rows table-pin-cols">
-          <thead className="text-center">
-            <tr>
-              <th className="w-1/5"></th>
-              {players.map((player) => (
-                <td key={player.name} className="text-lg capitalize">
-                  {player.name}
-                </td>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {holes.map((hole) => (
-              <tr key={hole}>
-                <td>
-                  <span className="text-xs">#{hole}</span>
-                </td>
+      {players.length > 0 && (
+        <div className="flex flex-col w-full max-h-screen p-4 overflow-y-auto">
+          <table className="table table-sm table-pin-rows table-pin-cols">
+            <thead className="text-center">
+              <tr>
+                <th className="w-1/5"></th>
                 {players.map((player) => (
-                  <td key={player.name} className="text-center">
-                    <Button
-                      variant="outline"
-                      className="w-12 h-12"
-                      onClick={() => openModal(hole, player)}
-                    >
-                      {player.scores[hole]}
-                    </Button>
+                  <td key={player.name} className="text-lg capitalize">
+                    {player.name}
                   </td>
                 ))}
               </tr>
-            ))}
-            <tr>
-              <td>Total</td>
-              {players.map((player) => (
-                <td key={player.name} className="text-center">
-                  {player.total}
-                </td>
+            </thead>
+            <tbody>
+              {holes.map((hole) => (
+                <tr key={hole}>
+                  <td>
+                    <span className="text-xs">#{hole}</span>
+                  </td>
+                  {players.map((player) => (
+                    <td key={player.name} className="text-center">
+                      <Button
+                        variant="outline"
+                        className="w-12 h-12"
+                        onClick={() => openModal(hole, player)}
+                      >
+                        {player.scores[hole]}
+                      </Button>
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <tr>
+                <td>Total</td>
+                {players.map((player) => (
+                  <td key={player.name} className="text-center">
+                    {player.total}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="flex flex-1 justify-center">
+            <Button variant="destructive" size="lg" onClick={clear}>
+              Clear
+            </Button>
+          </div>
+        </div>
+      )}
 
       <button
         className="btn btn-secondary btn-circle absolute bottom-4 right-4"
@@ -161,7 +192,14 @@ const AddPlayerModal = ({
 }: AddPlayerModalProps) => {
   const [name, setName] = useState("");
   const addPlayer = () => {
-    setPlayers([...players, new PuttPuttPlayer(name)]);
+    const newPlayerList = [...players, new PuttPuttPlayer(name)];
+    setPlayers(newPlayerList);
+    // add to session storage
+    sessionStorage.setItem(
+      SESSION_STORAGE_KEYS.PLAYERS,
+      JSON.stringify(newPlayerList)
+    );
+    // reset name
     setName("");
   };
 
