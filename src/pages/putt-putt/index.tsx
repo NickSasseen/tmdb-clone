@@ -21,9 +21,11 @@ import { Plus, PlusCircle, Skull, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
 class PuttPuttPlayer {
-  constructor(public name: string) {}
+  constructor(public name: string) {
+    this.scores = new Array<number>();
+  }
 
-  public scores: number[] = Array<number>(18);
+  public scores: number[];
 
   public get total(): number {
     return this.scores.reduce(
@@ -47,12 +49,29 @@ const PuttPutt = () => {
     player: undefined,
   });
 
+  const addScoreToPlayer = (
+    player: PuttPuttPlayer,
+    hole: number,
+    score: number
+  ) => {
+    const copyOfPlayers = players;
+    const thisPlayer = copyOfPlayers.find(
+      (p) => p.name === player.name
+    ) as PuttPuttPlayer;
+    console.log(thisPlayer);
+    thisPlayer.scores[hole] = score;
+    setPlayers(copyOfPlayers);
+    closeModal();
+  };
+
   const openModal = (hole: number, player: PuttPuttPlayer) =>
     setScoreModal({ open: true, hole, player });
+
   const closeModal = () =>
-    setScoreModal((orig) => {
-      orig.open = false;
-      return orig;
+    setScoreModal({
+      open: false,
+      hole: 0,
+      player: undefined,
     });
 
   return (
@@ -79,13 +98,18 @@ const PuttPutt = () => {
                       variant="outline"
                       className="w-12 h-12"
                       onClick={() => openModal(hole, player)}
-                    ></Button>
+                    >
+                      {player.scores[hole]}
+                    </Button>
                   </td>
                 ))}
               </tr>
             ))}
             <tr>
               <td>Total</td>
+              {players.map((player) => (
+                <td className="text-center">{player.total}</td>
+              ))}
             </tr>
           </tbody>
         </table>
@@ -100,7 +124,9 @@ const PuttPutt = () => {
 
       <ScoreModal
         open={scoreModal.open}
+        player={scoreModal.player ?? new PuttPuttPlayer("")}
         closeModal={closeModal}
+        addScore={addScoreToPlayer}
         hole={scoreModal.hole}
       />
 
@@ -190,21 +216,22 @@ const AddPlayerModal = ({
 const ScoreModal = ({
   hole,
   open,
+  player,
   closeModal,
+  addScore,
 }: {
   hole: number;
   open: boolean;
+  player: PuttPuttPlayer;
   closeModal: () => void;
+  addScore: (player: PuttPuttPlayer, hole: number, score: number) => void;
 }) => {
-  const handleOpenChange = (isOpen: boolean) => {
-    console.log("isOpen", isOpen);
-  };
   const handleScoreSelection = (score: number) => {
-    console.log("selected", score);
+    addScore(player, hole, score);
   };
 
   return (
-    <Dialog onOpenChange={handleOpenChange} open={open}>
+    <Dialog open={open}>
       <DialogContent className="max-w-screen p-4">
         <DialogHeader>
           <DialogTitle>Enter score for hole #{hole}</DialogTitle>
