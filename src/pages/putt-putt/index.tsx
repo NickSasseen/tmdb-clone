@@ -29,7 +29,8 @@ class PuttPuttPlayer {
 
   public get total(): number {
     return this.scores.reduce(
-      (previous, current, index, array) => previous + current
+      (previous, current, index, array) => previous + current,
+      0
     );
   }
 }
